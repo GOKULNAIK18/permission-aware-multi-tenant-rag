@@ -1,0 +1,808 @@
+{
+  "acl_filter": {
+    "all_supported_roles": {
+      "iterations": 30,
+      "max_ms": 0.008,
+      "mean_ms": 0.008,
+      "median_ms": 0.008,
+      "min_ms": 0.008,
+      "p95_ms": 0.008,
+      "p99_ms": 0.008
+    },
+    "multiple_roles": {
+      "iterations": 30,
+      "max_ms": 0.008,
+      "mean_ms": 0.008,
+      "median_ms": 0.008,
+      "min_ms": 0.008,
+      "p95_ms": 0.008,
+      "p99_ms": 0.008
+    },
+    "multiple_roles_and_user": {
+      "iterations": 30,
+      "max_ms": 0.008,
+      "mean_ms": 0.008,
+      "median_ms": 0.008,
+      "min_ms": 0.008,
+      "p95_ms": 0.008,
+      "p99_ms": 0.008
+    },
+    "one_role": {
+      "iterations": 30,
+      "max_ms": 0.009,
+      "mean_ms": 0.008,
+      "median_ms": 0.008,
+      "min_ms": 0.008,
+      "p95_ms": 0.008,
+      "p99_ms": 0.009
+    },
+    "user_specific": {
+      "iterations": 30,
+      "max_ms": 0.005,
+      "mean_ms": 0.005,
+      "median_ms": 0.005,
+      "min_ms": 0.005,
+      "p95_ms": 0.005,
+      "p99_ms": 0.005
+    }
+  },
+  "benchmark_kind": "local synthetic developer benchmark; not production performance",
+  "benchmark_timestamp_utc": "2026-09-29T15:57:06.870890+00:00",
+  "embedding": {
+    "device": "mps:0",
+    "warm_query_embedding": {
+      "iterations": 30,
+      "max_ms": 28.562,
+      "mean_ms": 15.269,
+      "median_ms": 13.27,
+      "min_ms": 9.957,
+      "p95_ms": 25.91,
+      "p99_ms": 28.552
+    }
+  },
+  "environment": {
+    "cpu": "Apple M1",
+    "database_driver": "postgresql+psycopg",
+    "database_echo_enabled": false,
+    "database_max_overflow": 10,
+    "database_pool_size": 5,
+    "embedding_device": "mps:0",
+    "embedding_dimension": 384,
+    "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+    "external_llm_calls": 0,
+    "iterations_per_sample": 30,
+    "logical_cpu_count": 8,
+    "memory_total_gb": 8.0,
+    "operating_system": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "python_version": "3.13.1",
+    "qdrant_client_version": "1.19.1",
+    "qdrant_endpoint": {
+      "host": "localhost",
+      "mode": "configured_service",
+      "port": 6333
+    },
+    "qdrant_server_version": "1.13.2",
+    "roles": 3,
+    "synthetic": true,
+    "tenants": 2,
+    "users": 4,
+    "warmup_iterations": 5
+  },
+  "limitations": [
+    "All content and identities are synthetic and local; this is not a production capacity claim.",
+    "Unfiltered Qdrant is an isolated baseline component only, never used by secure RAG.",
+    "RAG HTTP samples use real JWT verification and audit persistence; LLM generation is deterministic and local.",
+    "Permission propagation is one measured revoke/grant cycle per backend, not a distribution.",
+    "Concurrency uses in-process FastAPI TestClient, not a networked load test of a deployed API server."
+  ],
+  "model_initialization": {
+    "excluded_from_warm_embedding_latency": true,
+    "first_dimension_load_ms": 15247.682
+  },
+  "permission_propagation": {
+    "in_memory": {
+      "backend": "in_memory",
+      "grant_observation_next_query": {
+        "iterations": 1,
+        "new_chunk_returned": true,
+        "update_plus_next_query_ms": 21.976
+      },
+      "permission_update_grant": {
+        "iterations": 1,
+        "measured_ms": 13.211
+      },
+      "permission_update_revoke": {
+        "iterations": 1,
+        "measured_ms": 19.516
+      },
+      "revocation_observation_next_query": {
+        "iterations": 1,
+        "post_revoke_llm_calls": 0,
+        "revoked_chunk_returned": false,
+        "update_plus_next_query_ms": 25.457
+      }
+    },
+    "real_server": {
+      "backend": "real_server",
+      "grant_observation_next_query": {
+        "iterations": 1,
+        "new_chunk_returned": true,
+        "update_plus_next_query_ms": 32.701
+      },
+      "permission_update_grant": {
+        "iterations": 1,
+        "measured_ms": 20.815
+      },
+      "permission_update_revoke": {
+        "iterations": 1,
+        "measured_ms": 25.294
+      },
+      "revocation_observation_next_query": {
+        "iterations": 1,
+        "post_revoke_llm_calls": 0,
+        "revoked_chunk_returned": false,
+        "update_plus_next_query_ms": 35.651
+      }
+    }
+  },
+  "pipeline_components": {
+    "in_memory": {
+      "acl_filter_construction": {
+        "iterations": 30,
+        "max_ms": 0.01,
+        "mean_ms": 0.01,
+        "median_ms": 0.01,
+        "min_ms": 0.009,
+        "p95_ms": 0.01,
+        "p99_ms": 0.01
+      },
+      "audit_median_delta_ms": 7.715,
+      "backend": "in_memory",
+      "filtered_qdrant_search": {
+        "iterations": 30,
+        "max_ms": 49.188,
+        "mean_ms": 46.882,
+        "median_ms": 46.755,
+        "min_ms": 46.129,
+        "p95_ms": 47.953,
+        "p99_ms": 48.943
+      },
+      "no_audit_baseline_only": {
+        "iterations": 30,
+        "max_ms": 61.257,
+        "mean_ms": 58.6,
+        "median_ms": 58.451,
+        "min_ms": 57.368,
+        "p95_ms": 60.27,
+        "p99_ms": 61.122
+      },
+      "prompt_construction": {
+        "iterations": 30,
+        "max_ms": 0.003,
+        "mean_ms": 0.003,
+        "median_ms": 0.003,
+        "min_ms": 0.003,
+        "p95_ms": 0.003,
+        "p99_ms": 0.003
+      },
+      "required_audit_write": {
+        "iterations": 30,
+        "max_ms": 2.951,
+        "mean_ms": 1.557,
+        "median_ms": 1.353,
+        "min_ms": 1.196,
+        "p95_ms": 2.74,
+        "p99_ms": 2.921
+      },
+      "second_acl_check": {
+        "iterations": 30,
+        "max_ms": 0.002,
+        "mean_ms": 0.001,
+        "median_ms": 0.001,
+        "min_ms": 0.001,
+        "p95_ms": 0.001,
+        "p99_ms": 0.002
+      },
+      "secure_rag_with_audit": {
+        "iterations": 30,
+        "max_ms": 70.871,
+        "mean_ms": 65.895,
+        "median_ms": 66.167,
+        "min_ms": 61.723,
+        "p95_ms": 68.025,
+        "p99_ms": 70.143
+      },
+      "warm_query_embedding": {
+        "iterations": 30,
+        "max_ms": 16.194,
+        "mean_ms": 10.984,
+        "median_ms": 10.621,
+        "min_ms": 8.189,
+        "p95_ms": 13.739,
+        "p99_ms": 15.646
+      }
+    },
+    "real_server": {
+      "acl_filter_construction": {
+        "iterations": 30,
+        "max_ms": 0.014,
+        "mean_ms": 0.013,
+        "median_ms": 0.013,
+        "min_ms": 0.013,
+        "p95_ms": 0.014,
+        "p99_ms": 0.014
+      },
+      "audit_median_delta_ms": 0.676,
+      "backend": "real_server",
+      "filtered_qdrant_search": {
+        "iterations": 30,
+        "max_ms": 47.387,
+        "mean_ms": 7.302,
+        "median_ms": 4.666,
+        "min_ms": 3.217,
+        "p95_ms": 17.801,
+        "p99_ms": 39.96
+      },
+      "no_audit_baseline_only": {
+        "iterations": 30,
+        "max_ms": 48.1,
+        "mean_ms": 18.776,
+        "median_ms": 17.283,
+        "min_ms": 14.74,
+        "p95_ms": 28.729,
+        "p99_ms": 44.083
+      },
+      "prompt_construction": {
+        "iterations": 30,
+        "max_ms": 0.005,
+        "mean_ms": 0.004,
+        "median_ms": 0.004,
+        "min_ms": 0.004,
+        "p95_ms": 0.005,
+        "p99_ms": 0.005
+      },
+      "required_audit_write": {
+        "iterations": 30,
+        "max_ms": 3.293,
+        "mean_ms": 1.99,
+        "median_ms": 1.796,
+        "min_ms": 1.564,
+        "p95_ms": 3.169,
+        "p99_ms": 3.293
+      },
+      "second_acl_check": {
+        "iterations": 30,
+        "max_ms": 0.003,
+        "mean_ms": 0.002,
+        "median_ms": 0.002,
+        "min_ms": 0.002,
+        "p95_ms": 0.002,
+        "p99_ms": 0.003
+      },
+      "secure_rag_with_audit": {
+        "iterations": 30,
+        "max_ms": 22.893,
+        "mean_ms": 18.342,
+        "median_ms": 17.959,
+        "min_ms": 16.333,
+        "p95_ms": 21.555,
+        "p99_ms": 22.71
+      },
+      "warm_query_embedding": {
+        "iterations": 30,
+        "max_ms": 15.373,
+        "mean_ms": 11.848,
+        "median_ms": 11.437,
+        "min_ms": 9.445,
+        "p95_ms": 14.218,
+        "p99_ms": 15.117
+      }
+    }
+  },
+  "qdrant_retrieval": {
+    "in_memory": {
+      "backend": "qdrant-client in-memory",
+      "synthetic_chunk_counts": {
+        "100": {
+          "tenant_acl": {
+            "baseline_only_not_secure_rag_path": false,
+            "latency": {
+              "iterations": 30,
+              "max_ms": 241.73,
+              "mean_ms": 9.115,
+              "median_ms": 1.009,
+              "min_ms": 0.895,
+              "p95_ms": 1.786,
+              "p99_ms": 172.162
+            },
+            "mode": "in_memory",
+            "result_count": 10,
+            "synthetic_chunks": 100
+          },
+          "tenant_role_user_acl": {
+            "baseline_only_not_secure_rag_path": false,
+            "latency": {
+              "iterations": 30,
+              "max_ms": 1.937,
+              "mean_ms": 1.335,
+              "median_ms": 1.36,
+              "min_ms": 1.125,
+              "p95_ms": 1.639,
+              "p99_ms": 1.868
+            },
+            "mode": "in_memory",
+            "result_count": 10,
+            "synthetic_chunks": 100
+          },
+          "unfiltered_baseline_component_only": {
+            "baseline_only_not_secure_rag_path": true,
+            "latency": {
+              "iterations": 30,
+              "max_ms": 0.733,
+              "mean_ms": 0.515,
+              "median_ms": 0.477,
+              "min_ms": 0.461,
+              "p95_ms": 0.674,
+              "p99_ms": 0.724
+            },
+            "mode": "in_memory",
+            "result_count": 10,
+            "synthetic_chunks": 100
+          }
+        },
+        "1000": {
+          "tenant_acl": {
+            "baseline_only_not_secure_rag_path": false,
+            "latency": {
+              "iterations": 30,
+              "max_ms": 6.402,
+              "mean_ms": 5.842,
+              "median_ms": 5.752,
+              "min_ms": 5.216,
+              "p95_ms": 6.323,
+              "p99_ms": 6.38
+            },
+            "mode": "in_memory",
+            "result_count": 10,
+            "synthetic_chunks": 1000
+          },
+          "tenant_role_user_acl": {
+            "baseline_only_not_secure_rag_path": false,
+            "latency": {
+              "iterations": 30,
+              "max_ms": 11.123,
+              "mean_ms": 9.896,
+              "median_ms": 9.919,
+              "min_ms": 9.061,
+              "p95_ms": 10.638,
+              "p99_ms": 11.012
+            },
+            "mode": "in_memory",
+            "result_count": 10,
+            "synthetic_chunks": 1000
+          },
+          "unfiltered_baseline_component_only": {
+            "baseline_only_not_secure_rag_path": true,
+            "latency": {
+              "iterations": 30,
+              "max_ms": 1.643,
+              "mean_ms": 0.743,
+              "median_ms": 0.67,
+              "min_ms": 0.647,
+              "p95_ms": 1.19,
+              "p99_ms": 1.567
+            },
+            "mode": "in_memory",
+            "result_count": 10,
+            "synthetic_chunks": 1000
+          }
+        },
+        "5000": {
+          "tenant_acl": {
+            "baseline_only_not_secure_rag_path": false,
+            "latency": {
+              "iterations": 30,
+              "max_ms": 33.644,
+              "mean_ms": 28.488,
+              "median_ms": 28.314,
+              "min_ms": 27.659,
+              "p95_ms": 29.203,
+              "p99_ms": 32.389
+            },
+            "mode": "in_memory",
+            "result_count": 10,
+            "synthetic_chunks": 5000
+          },
+          "tenant_role_user_acl": {
+            "baseline_only_not_secure_rag_path": false,
+            "latency": {
+              "iterations": 30,
+              "max_ms": 56.234,
+              "mean_ms": 47.62,
+              "median_ms": 47.108,
+              "min_ms": 46.219,
+              "p95_ms": 49.223,
+              "p99_ms": 54.287
+            },
+            "mode": "in_memory",
+            "result_count": 10,
+            "synthetic_chunks": 5000
+          },
+          "unfiltered_baseline_component_only": {
+            "baseline_only_not_secure_rag_path": true,
+            "latency": {
+              "iterations": 30,
+              "max_ms": 3.746,
+              "mean_ms": 2.715,
+              "median_ms": 2.553,
+              "min_ms": 2.463,
+              "p95_ms": 3.586,
+              "p99_ms": 3.707
+            },
+            "mode": "in_memory",
+            "result_count": 10,
+            "synthetic_chunks": 5000
+          }
+        }
+      }
+    },
+    "real_server": {
+      "backend": "local Qdrant server",
+      "synthetic_chunk_counts": {
+        "100": {
+          "tenant_acl": {
+            "baseline_only_not_secure_rag_path": false,
+            "latency": {
+              "iterations": 30,
+              "max_ms": 3.479,
+              "mean_ms": 2.392,
+              "median_ms": 2.251,
+              "min_ms": 1.884,
+              "p95_ms": 3.266,
+              "p99_ms": 3.433
+            },
+            "mode": "real_server",
+            "result_count": 10,
+            "synthetic_chunks": 100
+          },
+          "tenant_role_user_acl": {
+            "baseline_only_not_secure_rag_path": false,
+            "latency": {
+              "iterations": 30,
+              "max_ms": 3.237,
+              "mean_ms": 2.457,
+              "median_ms": 2.36,
+              "min_ms": 2.064,
+              "p95_ms": 3.026,
+              "p99_ms": 3.212
+            },
+            "mode": "real_server",
+            "result_count": 10,
+            "synthetic_chunks": 100
+          },
+          "unfiltered_baseline_component_only": {
+            "baseline_only_not_secure_rag_path": true,
+            "latency": {
+              "iterations": 30,
+              "max_ms": 3.293,
+              "mean_ms": 2.379,
+              "median_ms": 2.24,
+              "min_ms": 1.768,
+              "p95_ms": 3.19,
+              "p99_ms": 3.278
+            },
+            "mode": "real_server",
+            "result_count": 10,
+            "synthetic_chunks": 100
+          }
+        },
+        "1000": {
+          "tenant_acl": {
+            "baseline_only_not_secure_rag_path": false,
+            "latency": {
+              "iterations": 30,
+              "max_ms": 3.064,
+              "mean_ms": 2.491,
+              "median_ms": 2.394,
+              "min_ms": 2.153,
+              "p95_ms": 3.03,
+              "p99_ms": 3.061
+            },
+            "mode": "real_server",
+            "result_count": 10,
+            "synthetic_chunks": 1000
+          },
+          "tenant_role_user_acl": {
+            "baseline_only_not_secure_rag_path": false,
+            "latency": {
+              "iterations": 30,
+              "max_ms": 3.254,
+              "mean_ms": 2.41,
+              "median_ms": 2.315,
+              "min_ms": 1.96,
+              "p95_ms": 3.068,
+              "p99_ms": 3.22
+            },
+            "mode": "real_server",
+            "result_count": 10,
+            "synthetic_chunks": 1000
+          },
+          "unfiltered_baseline_component_only": {
+            "baseline_only_not_secure_rag_path": true,
+            "latency": {
+              "iterations": 30,
+              "max_ms": 3.164,
+              "mean_ms": 2.522,
+              "median_ms": 2.426,
+              "min_ms": 2.004,
+              "p95_ms": 3.095,
+              "p99_ms": 3.154
+            },
+            "mode": "real_server",
+            "result_count": 10,
+            "synthetic_chunks": 1000
+          }
+        },
+        "5000": {
+          "tenant_acl": {
+            "baseline_only_not_secure_rag_path": false,
+            "latency": {
+              "iterations": 30,
+              "max_ms": 4.113,
+              "mean_ms": 2.952,
+              "median_ms": 2.849,
+              "min_ms": 2.554,
+              "p95_ms": 3.48,
+              "p99_ms": 3.93
+            },
+            "mode": "real_server",
+            "result_count": 10,
+            "synthetic_chunks": 5000
+          },
+          "tenant_role_user_acl": {
+            "baseline_only_not_secure_rag_path": false,
+            "latency": {
+              "iterations": 30,
+              "max_ms": 3.323,
+              "mean_ms": 2.635,
+              "median_ms": 2.501,
+              "min_ms": 2.217,
+              "p95_ms": 3.282,
+              "p99_ms": 3.314
+            },
+            "mode": "real_server",
+            "result_count": 10,
+            "synthetic_chunks": 5000
+          },
+          "unfiltered_baseline_component_only": {
+            "baseline_only_not_secure_rag_path": true,
+            "latency": {
+              "iterations": 30,
+              "max_ms": 6.982,
+              "mean_ms": 3.417,
+              "median_ms": 3.205,
+              "min_ms": 2.767,
+              "p95_ms": 4.197,
+              "p99_ms": 6.256
+            },
+            "mode": "real_server",
+            "result_count": 10,
+            "synthetic_chunks": 5000
+          }
+        }
+      }
+    }
+  },
+  "secure_http_pipeline": {
+    "in_memory": {
+      "authorized": {
+        "latency": {
+          "iterations": 30,
+          "max_ms": 78.885,
+          "mean_ms": 70.31,
+          "median_ms": 69.783,
+          "min_ms": 66.752,
+          "p95_ms": 73.38,
+          "p99_ms": 77.35
+        },
+        "mean_retrieved_chunks": 5.0,
+        "mock_llm_call_count": 30,
+        "status_counts": {
+          "200": 30
+        },
+        "target_reached_mock_llm": true,
+        "target_retrieved": true
+      },
+      "backend": "in_memory",
+      "concurrency": {
+        "1": {
+          "error_count": 0,
+          "iterations": 30,
+          "kind": "FastAPI TestClient in-process; local characterization only",
+          "latency": {
+            "iterations": 30,
+            "max_ms": 77.044,
+            "mean_ms": 72.785,
+            "median_ms": 73.065,
+            "min_ms": 67.549,
+            "p95_ms": 76.85,
+            "p99_ms": 76.997
+          },
+          "throughput_requests_per_second": 13.71
+        },
+        "10": {
+          "error_count": 0,
+          "iterations": 30,
+          "kind": "FastAPI TestClient in-process; local characterization only",
+          "latency": {
+            "iterations": 30,
+            "max_ms": 653.959,
+            "mean_ms": 615.768,
+            "median_ms": 609.896,
+            "min_ms": 566.398,
+            "p95_ms": 649.572,
+            "p99_ms": 653.618
+          },
+          "throughput_requests_per_second": 15.768
+        },
+        "5": {
+          "error_count": 0,
+          "iterations": 30,
+          "kind": "FastAPI TestClient in-process; local characterization only",
+          "latency": {
+            "iterations": 30,
+            "max_ms": 529.771,
+            "mean_ms": 347.54,
+            "median_ms": 311.101,
+            "min_ms": 304.45,
+            "p95_ms": 528.047,
+            "p99_ms": 529.76
+          },
+          "throughput_requests_per_second": 14.213
+        }
+      },
+      "cross_tenant": {
+        "latency": {
+          "iterations": 30,
+          "max_ms": 237.612,
+          "mean_ms": 81.21,
+          "median_ms": 72.676,
+          "min_ms": 67.719,
+          "p95_ms": 122.593,
+          "p99_ms": 213.73
+        },
+        "mean_retrieved_chunks": 5.0,
+        "mock_llm_call_count": 30,
+        "status_counts": {
+          "200": 30
+        },
+        "target_reached_mock_llm": false,
+        "target_retrieved": false
+      },
+      "external_llm_calls": 0,
+      "unauthorized_role": {
+        "latency": {
+          "iterations": 30,
+          "max_ms": 91.538,
+          "mean_ms": 71.093,
+          "median_ms": 69.596,
+          "min_ms": 68.294,
+          "p95_ms": 78.901,
+          "p99_ms": 88.928
+        },
+        "mean_retrieved_chunks": 5.0,
+        "mock_llm_call_count": 30,
+        "status_counts": {
+          "200": 30
+        },
+        "target_reached_mock_llm": false,
+        "target_retrieved": false
+      }
+    },
+    "real_server": {
+      "authorized": {
+        "latency": {
+          "iterations": 30,
+          "max_ms": 33.202,
+          "mean_ms": 26.59,
+          "median_ms": 25.226,
+          "min_ms": 20.564,
+          "p95_ms": 31.996,
+          "p99_ms": 32.918
+        },
+        "mean_retrieved_chunks": 5.0,
+        "mock_llm_call_count": 30,
+        "status_counts": {
+          "200": 30
+        },
+        "target_reached_mock_llm": true,
+        "target_retrieved": true
+      },
+      "backend": "real_server",
+      "concurrency": {
+        "1": {
+          "error_count": 0,
+          "iterations": 30,
+          "kind": "FastAPI TestClient in-process; local characterization only",
+          "latency": {
+            "iterations": 30,
+            "max_ms": 26.055,
+            "mean_ms": 23.182,
+            "median_ms": 22.919,
+            "min_ms": 20.013,
+            "p95_ms": 25.528,
+            "p99_ms": 25.941
+          },
+          "throughput_requests_per_second": 42.855
+        },
+        "10": {
+          "error_count": 0,
+          "iterations": 30,
+          "kind": "FastAPI TestClient in-process; local characterization only",
+          "latency": {
+            "iterations": 30,
+            "max_ms": 160.037,
+            "mean_ms": 140.855,
+            "median_ms": 140.044,
+            "min_ms": 122.446,
+            "p95_ms": 157.507,
+            "p99_ms": 159.389
+          },
+          "throughput_requests_per_second": 67.628
+        },
+        "5": {
+          "error_count": 0,
+          "iterations": 30,
+          "kind": "FastAPI TestClient in-process; local characterization only",
+          "latency": {
+            "iterations": 30,
+            "max_ms": 93.368,
+            "mean_ms": 85.715,
+            "median_ms": 87.303,
+            "min_ms": 78.013,
+            "p95_ms": 92.213,
+            "p99_ms": 93.095
+          },
+          "throughput_requests_per_second": 56.922
+        }
+      },
+      "cross_tenant": {
+        "latency": {
+          "iterations": 30,
+          "max_ms": 27.13,
+          "mean_ms": 24.455,
+          "median_ms": 24.77,
+          "min_ms": 21.29,
+          "p95_ms": 26.305,
+          "p99_ms": 26.908
+        },
+        "mean_retrieved_chunks": 5.0,
+        "mock_llm_call_count": 30,
+        "status_counts": {
+          "200": 30
+        },
+        "target_reached_mock_llm": false,
+        "target_retrieved": false
+      },
+      "external_llm_calls": 0,
+      "unauthorized_role": {
+        "latency": {
+          "iterations": 30,
+          "max_ms": 40.174,
+          "mean_ms": 24.75,
+          "median_ms": 23.976,
+          "min_ms": 21.378,
+          "p95_ms": 27.951,
+          "p99_ms": 36.93
+        },
+        "mean_retrieved_chunks": 5.0,
+        "mock_llm_call_count": 30,
+        "status_counts": {
+          "200": 30
+        },
+        "target_reached_mock_llm": false,
+        "target_retrieved": false
+      }
+    }
+  }
+}

@@ -1,0 +1,84 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: permission_aware_rag
+          POSTGRES_USER: ci_user
+          POSTGRES_PASSWORD: ci-only-password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U ci_user -d permission_aware_rag"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+      qdrant:
+        image: qdrant/qdrant:v1.19.1
+        ports:
+          - 6333:6333
+        options: >-
+          --health-cmd "bash -c 'echo > /dev/tcp/127.0.0.1/6333'"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 20
+    env:
+      APP_NAME: permission-aware-rag
+      ENVIRONMENT: test
+      DEBUG: "false"
+      DATABASE_URL: postgresql+psycopg://ci_user:ci-only-password@localhost:5432/permission_aware_rag
+      DB_POOL_SIZE: 5
+      DB_MAX_OVERFLOW: 10
+      DB_ECHO: "false"
+      JWT_SECRET: ci-only-secret-not-for-production-change-before-deployment
+      JWT_ALGORITHM: HS256
+      JWT_EXPIRE_MINUTES: 60
+      QDRANT_URL: http://localhost:6333
+      QDRANT_COLLECTION: chunks
+      QDRANT_API_KEY: ""
+      EMBEDDING_MODEL: sentence-transformers/all-MiniLM-L6-v2
+      LLM_PROVIDER: mock
+      LLM_BASE_URL: https://api.openai.com/v1
+      LLM_API_KEY: ""
+      LLM_MODEL: gpt-4o-mini
+      LLM_TIMEOUT_SECONDS: 5
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.13.1
+          cache: pip
+          cache-dependency-path: requirements-dev.lock
+
+      - name: Install locked dependencies
+        run: python -m pip install --requirement requirements-dev.lock
+
+      - name: Apply database migrations
+        run: alembic upgrade head
+
+      - name: Run complete tests
+        run: pytest -q
+
+      - name: Run security and leakage tests explicitly
+        run: >-
+          pytest -q
+          tests/test_adversarial_security.py
+          tests/test_permissions.py
+          tests/test_leakage.py
+          tests/test_acl.py
+          tests/test_rag.py
+          tests/test_audit.py
